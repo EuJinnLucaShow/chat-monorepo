@@ -18,10 +18,10 @@
     "docker:down": "docker-compose down"
   },
   "devDependencies": {
-    "@turbo/gen": "^1.10.0",
-    "turbo": "^1.10.0",
+    "@turbo/gen": "^2.5.4",
+    "@types/node": "^22.15.30",
     "prettier": "^3.0.0",
-    "typescript": "^5.0.0",
-    "@types/node": "^20.0.0"
+    "turbo": "^2.5.4",
+    "typescript": "^5.0.0"
   }
 }
