@@ -1,0 +1,35 @@
+FROM node:18-alpine
+
+# Встановлюємо pnpm
+RUN npm install -g pnpm
+
+WORKDIR /app
+
+# Копіюємо workspace конфігурації
+COPY package.json pnpm-workspace.yaml ./
+COPY turbo.json ./
+
+# Копіюємо всі package.json файли
+COPY apps/backend/package.json ./apps/backend/
+COPY packages/*/package.json ./packages/*/
+
+# Встановлюємо залежності
+RUN pnpm install --frozen-lockfile
+
+# Копіюємо спільні пакети
+COPY packages/ ./packages/
+
+# Копіюємо backend код
+COPY apps/backend/ ./apps/backend/
+
+# Збираємо спільні пакети
+RUN pnpm run build --filter @chat/shared
+
+# Збираємо backend
+RUN pnpm run build --filter @chat/backend
+
+WORKDIR /app/apps/backend
+
+EXPOSE 3001
+
+CMD ["pnpm", "start:prod"]
