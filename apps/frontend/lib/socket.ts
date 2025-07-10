@@ -1,12 +1,13 @@
-import { io, Socket } from 'socket.io-client';
-import { ServerToClientEvents, ClientToServerEvents } from '@chat/shared';
+import { io, Socket } from "socket.io-client";
 
 class SocketManager {
-  private socket: Socket<ServerToClientEvents, ClientToServerEvents> | null = null;
+  private socket: Socket | null = null;
 
   connect() {
     if (!this.socket) {
-      this.socket = io(process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001');
+      this.socket = io(
+        process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001"
+      );
     }
     return this.socket;
   }
